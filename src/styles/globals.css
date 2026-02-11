@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+@theme {
+    --color-primary: #72D8FD;
+    --color-secondary: #F0FBFF;
+    --color-accent: #37B6FF;
+    --color-soft-white: #FFFFFF;
+    --color-deep-grey: #1E293B;
+
+    --font-outfit: "Outfit", sans-serif;
+    --font-playfair: "Playfair Display", serif;
+}
+
+:root {
+    --background: #FFFFFF;
+    --foreground: #1E293B;
+}
+
+
+
+body {
+    background-color: var(--color-soft-white);
+    color: var(--color-deep-grey);
+    font-family: var(--font-outfit);
+    overflow-x: hidden;
+    line-height: 1.6;
+    letter-spacing: 0.01em;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-playfair);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+}
+
+.glass {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.premium-shadow {
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+}
+
+/* GSAP Reveal Animations */
+.reveal-up {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.reveal-fade {
+    opacity: 0;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-primary);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-accent);
+}
