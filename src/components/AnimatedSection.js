@@ -1,5 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+
+if (typeof window !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+}
 
 const AnimatedSection = ({ children, animation = "up", delay = 0, className = "" }) => {
     const sectionRef = useRef(null);

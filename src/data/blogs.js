@@ -4,7 +4,7 @@ export const blogs = [
         title: 'How to style your pet for the Royal Ascot Garden Party',
         category: 'Lifestyle',
         date: 'Feb 10, 2026',
-        image: '/images/cat-hero.png',
+        image: '/images/pairmen and dog.jpeg',
         excerpt: 'Luxury pet styling is not just about the collar, it is about the attitude. Learn how to pair velvet with high-society events.',
         content: 'Full article content would go here...'
     },
@@ -13,7 +13,7 @@ export const blogs = [
         title: 'Choosing the Right Pendant for Your Dogs Personality',
         category: 'Guides',
         date: 'Jan 25, 2026',
-        image: '/images/dog-hero.png',
+        image: '/images/dog1.jpeg',
         excerpt: 'From energetic retrievers to calm bulldogs, find the metal and stone that reflects their unique spirit.',
         content: 'Full article content would go here...'
     },
@@ -22,8 +22,8 @@ export const blogs = [
         title: 'Behind the Scenes: Handcrafting in our London Studio',
         category: 'Craftsmanship',
         date: 'Jan 15, 2026',
-        image: '/images/cat-hero.png',
-        excerpt: 'Take a look at the artisanal process behind every Paw Jewels piece. Quality that lasts a lifetime.',
+        image: '/images/cat1.jpeg',
+        excerpt: 'Take a look at the artisanal process behind every piece. Quality that lasts a lifetime.',
         content: 'Full article content would go here...'
     }
 ];

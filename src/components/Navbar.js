@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { ShoppingBag, Menu, X, Heart, Search } from 'lucide-react';
+import { useRouter } from 'next/router';
+import { ShoppingBag, Menu, X, Search, User } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import gsap from 'gsap';
 
@@ -8,12 +9,12 @@ const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const { cartCount, setIsCartOpen } = useCart();
-    const navRef = useRef(null);
+    const router = useRouter();
     const menuRef = useRef(null);
 
     useEffect(() => {
         const handleScroll = () => {
-            setScrolled(window.scrollY > 50);
+            setScrolled(window.scrollY > 20);
         };
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
@@ -22,111 +23,113 @@ const Navbar = () => {
     useEffect(() => {
         if (isOpen) {
             gsap.to(menuRef.current, {
-                x: 0,
+                y: 0,
                 duration: 0.6,
-                ease: "power4.out"
+                ease: "power3.out"
             });
         } else {
             gsap.to(menuRef.current, {
-                x: '100%',
+                y: '-100%',
                 duration: 0.6,
-                ease: "power4.in"
+                ease: "power3.in"
             });
         }
     }, [isOpen]);
 
     const navLinks = [
-        { name: 'Home', href: '/' },
-        { name: 'Shop', href: '/shop' },
-        { name: 'About Us', href: '/about' },
-        { name: 'Blogs', href: '/blog' },
-        { name: 'Contact', href: '/contact' },
+        { name: 'HOME', href: '/' },
+        { name: 'SHOP', href: '/shop' },
+        { name: 'OUR STORY', href: '/about' },
+        { name: 'BLOG', href: '/blog' },
+        { name: 'CONTACT', href: '/contact' },
     ];
 
     return (
         <>
             <nav
-                ref={navRef}
-                className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${scrolled ? 'py-2 glass premium-shadow backdrop-blur-md bg-white/70' : 'py-6 bg-transparent'
+                className={`fixed top-0 left-0 w-full z-[100] transition-all duration-500 ${scrolled
+                    ? 'py-4 bg-[#111111]/80 backdrop-blur-md border-b border-accent/10 shadow-2xl'
+                    : 'py-6 bg-transparent border-b border-transparent'
                     }`}
             >
-                <div className="container mx-auto px-6 flex justify-between items-center">
-                    {/* Logo */}
-                    <Link href="/" className="flex items-center space-x-2 group">
-                        <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center group-hover:rotate-12 transition-transform">
-                            <span className="text-white font-bold text-xl">P</span>
-                        </div>
-                        <span className="text-2xl font-playfair font-bold text-deep-grey">
-                            Paw <span className="text-primary">Jewels</span>
-                        </span>
-                    </Link>
+                <div className="container mx-auto px-6 flex justify-between items-center h-14">
+                    {/* LEFT: Logo Section */}
+                    <div className="flex-1 flex items-center justify-start">
+                        <Link href="/" className="group flex items-center gap-3">
+                            <img
+                                src="/images/logo.png"
+                                alt="MANOR GUARDIAN"
+                                className="h-12 md:h-16 w-auto object-contain brightness-110"
+                            />
+                            <div className="hidden lg:block font-heading italic text-white uppercase tracking-[0.4em] text-[16px] font-bold">
+                            </div>
+                        </Link>
+                    </div>
 
-                    {/* Desktop Nav */}
-                    <div className="hidden md:flex items-center space-x-8">
+                    {/* CENTER: Navigation Links (Desktop) */}
+                    <div className="hidden lg:flex flex-[2] justify-center items-center gap-12">
                         {navLinks.map((link) => (
                             <Link
                                 key={link.name}
                                 href={link.href}
-                                className="text-deep-grey hover:text-primary transition-colors font-medium text-sm uppercase tracking-widest relative group"
+                                className="text-[11px] font-body font-bold text-accent hover:text-white uppercase tracking-[0.35em] transition-all duration-300"
                             >
                                 {link.name}
-                                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
                             </Link>
                         ))}
                     </div>
 
-                    {/* Icons */}
-                    <div className="flex items-center space-x-5">
-                        <button className="text-deep-grey hover:text-primary transition-colors">
-                            <Search size={22} />
-                        </button>
+                    {/* RIGHT: Icons & Cart */}
+                    <div className="flex-1 flex justify-end items-center gap-6">
+                       
                         <button
                             onClick={() => setIsCartOpen(true)}
-                            className="relative text-deep-grey hover:text-primary transition-colors"
+                            className="flex items-center gap-3 text-white hover:text-accent transition-all duration-300"
                         >
-                            <ShoppingBag size={22} />
-                            {cartCount > 0 && (
-                                <span className="absolute -top-2 -right-2 bg-primary text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
-                                    {cartCount}
-                                </span>
-                            )}
+                            <ShoppingBag size={18} strokeWidth={1} />
+                            <span className="hidden md:inline-block text-[11px] font-bold uppercase tracking-[0.2em] font-body">
+                                Cart ({cartCount})
+                            </span>
                         </button>
-                        <button
-                            className="md:hidden text-deep-grey"
-                            onClick={() => setIsOpen(true)}
-                        >
-                            <Menu size={28} />
+                        
+                        {/* Mobile Menu Toggle */}
+                        <button className="lg:hidden text-white" onClick={() => setIsOpen(true)}>
+                            <Menu size={24} strokeWidth={1} />
                         </button>
                     </div>
                 </div>
             </nav>
 
-            {/* Mobile Menu */}
+            {/* Mobile Overlay Menu */}
             <div
                 ref={menuRef}
-                className="fixed inset-0 z-[60] bg-white translate-x-full md:hidden flex flex-col p-10"
+                className="fixed inset-0 z-[110] bg-black flex flex-col items-center justify-center -translate-y-full px-10"
             >
-                <div className="flex justify-end">
-                    <button onClick={() => setIsOpen(false)} className="text-deep-grey">
-                        <X size={32} />
-                    </button>
-                </div>
-                <div className="flex flex-col space-y-8 mt-16 items-center">
+                <button 
+                    onClick={() => setIsOpen(false)} 
+                    className="absolute top-10 right-10 text-white hover:text-accent transition-colors"
+                >
+                    <X size={32} strokeWidth={1} />
+                </button>
+
+                <div className="flex flex-col space-y-10 items-center text-center">
                     {navLinks.map((link) => (
                         <Link
                             key={link.name}
                             href={link.href}
                             onClick={() => setIsOpen(false)}
-                            className="text-3xl font-playfair font-bold text-deep-grey hover:text-primary transition-colors"
+                            className="text-3xl font-heading text-white hover:text-accent transition-all duration-300 tracking-widest"
                         >
                             {link.name}
                         </Link>
                     ))}
+                    <Link href="/contact" onClick={() => setIsOpen(false)} className="text-3xl font-heading text-white hover:text-accent transition-all duration-300 tracking-widest">
+                        CONTACT
+                    </Link>
                 </div>
-                <div className="mt-auto flex justify-center space-x-6">
-                    <div className="w-12 h-12 rounded-full glass flex items-center justify-center text-primary">
-                        <Heart size={24} />
-                    </div>
+                
+                <div className="mt-24 text-[10px] tracking-[0.4em] text-accent/40 font-bold uppercase">
+                    ESTABLISHING AUTHORITY SINCE 2018
                 </div>
             </div>
         </>

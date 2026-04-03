@@ -1,30 +1,30 @@
 @import "tailwindcss";
 
 @theme {
-    --color-primary: #72D8FD;
-    --color-secondary: #F0FBFF;
-    --color-accent: #37B6FF;
-    --color-soft-white: #FFFFFF;
-    --color-deep-grey: #1E293B;
+    --color-primary: #121212;
+    --color-secondary: #002B1B;
+    --color-accent: #D4AF37;
+    --color-gold-light: #F1B50E;
+    --color-gold-dark: #A67C00;
+    --color-soft-white: #F5F5F5;
+    --color-deep-grey: #1E1E1E;
 
-    --font-outfit: "Outfit", sans-serif;
-    --font-playfair: "Playfair Display", serif;
+    --font-heading: "Cormorant Garamond", serif;
+    --font-body: "Montserrat", sans-serif;
 }
 
 :root {
-    --background: #FFFFFF;
-    --foreground: #1E293B;
+    --background: #0A0A0A;
+    --foreground: #F5F5F5;
 }
 
-
-
 body {
-    background-color: var(--color-soft-white);
-    color: var(--color-deep-grey);
-    font-family: var(--font-outfit);
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-body);
     overflow-x: hidden;
     line-height: 1.6;
-    letter-spacing: 0.01em;
+    letter-spacing: 0.02em;
 }
 
 h1,
@@ -33,9 +33,10 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: var(--font-playfair);
-    line-height: 1.2;
-    letter-spacing: -0.01em;
+    font-family: var(--font-heading);
+    line-height: 1.1;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
 }
 
 .glass {
@@ -75,4 +76,13 @@ h6 {
 
 ::-webkit-scrollbar-thumb:hover {
     background: var(--color-accent);
+}
+
+@keyframes pulse-slow {
+    0%, 100% { opacity: 0.7; transform: scale(0.98); }
+    50% { opacity: 1; transform: scale(1.02); }
+}
+
+.animate-pulse-slow {
+    animation: pulse-slow 3s ease-in-out infinite;
 }

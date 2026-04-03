@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import ProductCard from '../components/ProductCard';
 import AnimatedSection from '../components/AnimatedSection';
 import { products } from '../data/products';
-import { Filter, ChevronDown, Search } from 'lucide-react';
+import { Filter, ChevronDown, Search, Grid, List } from 'lucide-react';
 
 const Shop = () => {
     const router = useRouter();
@@ -38,89 +38,96 @@ const Shop = () => {
     const types = ['all', 'bags', 'harness', 'toys', 'collars', 'grooming', 'accessories'];
 
     return (
-        <div className="pt-32 pb-24 bg-soft-white min-h-screen">
+        <div className="pt-48 pb-32 bg-primary min-h-screen text-white">
             <Head>
-                <title>Shop Luxury Pet Jewelry | Paw Jewels</title>
+                <title>THE COLLECTION | MANOR GUARDIAN</title>
             </Head>
 
             <div className="container mx-auto px-6">
-                <AnimatedSection className="mb-12">
-                    <h1 className="text-5xl md:text-6xl font-playfair font-bold text-deep-grey mb-4 italic">The Collection</h1>
-                    <p className="text-gray-500 max-w-xl">Browse our exquisite range of handcrafted pet jewelry. Filter by category or type to find the perfect gift.</p>
-                </AnimatedSection>
+                <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-10">
+                    <AnimatedSection className="max-w-2xl">
+                        <span className="text-accent font-bold text-xs uppercase tracking-[0.4em] mb-4 block">New Arrivals</span>
+                        <h1 className="text-4xl sm:text-5xl md:text-8xl font-heading font-bold text-white mb-6 uppercase tracking-wider">THE <span className="italic text-accent">COLLECTION</span></h1>
+                        <p className="text-gray-500 font-body text-xs sm:text-sm tracking-wide leading-relaxed max-w-lg">Explore our curated luxury collection of elite pet jewelry. Each piece is crafted for style, durability, and unmatched quality.</p>
+                    </AnimatedSection>
+                    
+                   
+                </div>
 
-                {/* Filters Bar */}
-                <div className="bg-white rounded-3xl p-6 mb-12 premium-shadow flex flex-wrap items-center gap-6 border border-secondary/20">
-                    <div className="flex-1 min-w-[200px] relative">
-                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-                        <input
-                            type="text"
-                            placeholder="Search products..."
-                            className="w-full pl-12 pr-4 py-3 bg-secondary/5 rounded-2xl outline-none focus:ring-2 focus:ring-primary/20 text-sm"
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                        />
+                {/* Refined Filters Bar */}
+                <div className="flex flex-col lg:flex-row items-center justify-between gap-12 mb-20 py-8 border-y border-accent/10">
+                    <div className="flex flex-wrap items-center justify-center lg:justify-start gap-12">
+                        {/* Category Filter */}
+                        <div className="flex items-center gap-4">
+                            <span className="text-[10px] uppercase tracking-[0.4em] text-accent font-bold">Category</span>
+                            <div className="flex gap-6">
+                                {categories.map(c => (
+                                    <button 
+                                        key={c} 
+                                        onClick={() => setFilterCategory(c)}
+                                        className={`text-[10px] uppercase tracking-[0.2em] font-medium transition-all duration-300 ${filterCategory === c ? 'text-white border-b border-accent' : 'text-gray-600 hover:text-white'}`}
+                                    >
+                                        {c}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Divider */}
+                        <div className="hidden lg:block w-[1px] h-4 bg-accent/20"></div>
+
+                        {/* Search */}
+                        <div className="relative group w-full lg:min-w-[280px]">
+                            <Search className="absolute left-0 top-1/2 -translate-y-1/2 text-accent" size={14} />
+                            <input
+                                type="text"
+                                placeholder="SEARCH ALL PRODUCTS..."
+                                className="w-full pl-8 pr-4 py-2 bg-transparent border-none text-[10px] uppercase tracking-widest text-white outline-none focus:ring-0 placeholder:text-gray-700 font-bold"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                            />
+                            <div className="absolute bottom-0 left-0 w-full h-[1px] bg-accent/20 transition-all duration-500 group-focus-within:h-[2px] group-focus-within:bg-accent"></div>
+                        </div>
                     </div>
 
-                    <div className="flex flex-wrap gap-4">
-                        <div className="relative group">
-                            <select
-                                value={filterCategory}
-                                onChange={(e) => setFilterCategory(e.target.value)}
-                                className="appearance-none bg-white border border-secondary/30 rounded-full px-6 py-3 pr-10 text-sm font-medium focus:ring-2 focus:ring-primary/20 outline-none cursor-pointer"
-                            >
-                                {categories.map(c => <option key={c} value={c}>{c.charAt(0).toUpperCase() + c.slice(1)}</option>)}
-                            </select>
-                            <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" size={14} />
-                        </div>
-
-                        <div className="relative group">
-                            <select
-                                value={filterType}
-                                onChange={(e) => setFilterType(e.target.value)}
-                                className="appearance-none bg-white border border-secondary/30 rounded-full px-6 py-3 pr-10 text-sm font-medium focus:ring-2 focus:ring-primary/20 outline-none cursor-pointer"
-                            >
-                                {types.map(t => <option key={t} value={t}>{t.charAt(0).toUpperCase() + t.slice(1)}</option>)}
-                            </select>
-                            <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" size={14} />
-                        </div>
-
+                    <div className="flex items-center gap-8">
                         <div className="relative group">
                             <select
                                 value={sortBy}
                                 onChange={(e) => setSortBy(e.target.value)}
-                                className="appearance-none bg-white border border-secondary/30 rounded-full px-6 py-3 pr-10 text-sm font-medium focus:ring-2 focus:ring-primary/20 outline-none cursor-pointer"
+                                className="appearance-none bg-transparent text-[10px] uppercase tracking-[0.3em] font-bold text-accent px-4 py-2 pr-10 outline-none cursor-pointer border border-accent/20 hover:border-accent transition-colors"
                             >
-                                <option value="newest">Newest First</option>
-                                <option value="price-low">Price: Low to High</option>
-                                <option value="price-high">Price: High to Low</option>
+                                <option value="newest" className="bg-primary">Newest First</option>
+                                <option value="price-low" className="bg-primary">Price: Low to High</option>
+                                <option value="price-high" className="bg-primary">Price: High to Low</option>
                             </select>
-                            <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" size={14} />
+                            <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-accent pointer-events-none" size={12} />
                         </div>
                     </div>
                 </div>
 
                 {/* Results Counter */}
-                <div className="mb-8 flex justify-between items-center text-sm font-medium text-gray-400 uppercase tracking-widest">
-                    <span>Showing {sortedProducts.length} of {products.length} Products</span>
+                <div className="mb-12 flex justify-between items-center text-[10px] font-bold text-gray-700 uppercase tracking-[0.5em]">
+                    <span>Results ({sortedProducts.length})</span>
+                    <span className="text-accent/40 italic">Luxury Selection</span>
                 </div>
 
                 {/* Product Grid */}
                 {sortedProducts.length > 0 ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-12">
                         {sortedProducts.map((product) => (
                             <ProductCard key={product.id} product={product} />
                         ))}
                     </div>
                 ) : (
-                    <div className="py-24 text-center">
-                        <h3 className="text-2xl font-playfair font-bold text-deep-grey mb-4">No products found</h3>
-                        <p className="text-gray-500 mb-8">Try adjusting your filters or search query.</p>
+                    <div className="py-40 text-center border border-accent/10 bg-white/5">
+                        <h3 className="text-3xl font-heading font-bold text-white mb-6 uppercase tracking-widest">No Products Found</h3>
+                        <p className="text-gray-500 font-body text-sm mb-12 tracking-wide">Adjust your search parameters to find the perfect piece.</p>
                         <button
                             onClick={() => { setFilterCategory('all'); setFilterType('all'); setSearchQuery(''); }}
-                            className="text-primary font-bold uppercase tracking-widest border-b-2 border-primary"
+                            className="text-accent font-bold text-[10px] uppercase tracking-[0.4em] border-b-2 border-accent/20 hover:border-accent transition-all pb-2"
                         >
-                            Clear All Filters
+                            Reset Search
                         </button>
                     </div>
                 )}
